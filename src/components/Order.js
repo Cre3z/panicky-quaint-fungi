@@ -7,24 +7,41 @@ export default class Order extends React.Component {
     const product = this.props.products[key];
     const count = this.props.order[key];
     const isAvailable = product && product.status === "available";
+    const transitionOptions = {
+      classNames: "order",
+      key,
+      timeout: { enter: 500, exit: 500 }
+    };
     // check products loading state
     if (!product) return null;
     if (!isAvailable) {
       return (
-        <li key={key}>
-          Sorry {product ? product.name : "fish"} is no longer available.
-        </li>
+        <CSSTransition {...transitionOptions}>
+          <li key={key}>
+            Sorry {product ? product.name : "fish"} is no longer available
+          </li>
+        </CSSTransition>
       );
     }
     return (
-      <CSSTransition
-        classNames="order"
-        key={key}
-        timeout={{ enter: 250, exit: 250 }}
-      >
+      <CSSTransition {...transitionOptions}>
         <li key={key}>
-          {count} lbs {product.name} {formatPrice(product.price)}
-          <button onClick={() => this.props.removeFromOrder(key)}>x</button>
+          <span>
+            <TransitionGroup component="span" className="count">
+              <CSSTransition
+                classNames="count"
+                key={count}
+                timeout={{ enter: 500, exit: 500 }}
+              >
+                <span>{count}</span>
+              </CSSTransition>
+            </TransitionGroup>
+            lbs {product.name}
+            {formatPrice(count * product.price)}
+            <button onClick={() => this.props.removeFromOrder(key)}>
+              &times;
+            </button>
+          </span>
         </li>
       </CSSTransition>
     );
