@@ -5,8 +5,13 @@ import Order from "./Order";
 import samples from "../sample-fishes";
 import Product from "./Product";
 import base from "../base";
+import PropTypes from "prop-types";
 
 class App extends React.Component {
+  static propTypes = {
+    match: PropTypes.object
+  };
+
   state = {
     products: {},
     order: {}

@@ -1,6 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class EditProductForm extends React.Component {
+  static propTypes = {
+    fish: PropTypes.shape({
+      image: PropTypes.string,
+      name: PropTypes.string,
+      desc: PropTypes.string,
+      price: PropTypes.number,
+      status: PropTypes.bool
+    }),
+    index: PropTypes.string,
+    updateProduct: PropTypes.func
+  };
+
   handleChange = e => {
     const updateProduct = {
       ...this.props.details,
